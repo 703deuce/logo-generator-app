@@ -54,7 +54,7 @@ def generate_logos(request):
         height = int(request.POST.get('height', 768))
         
         logos = []
-        for _ in range(4):
+        for _ in range(16):  # Changed from 4 to 16
             try:
                 request_data = generate_logo(prompt, width, height)
                 request_id = request_data["id"]

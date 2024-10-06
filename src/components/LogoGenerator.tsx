@@ -156,7 +156,7 @@ const LogoGenerator: React.FC<LogoGeneratorProps> = ({ logos, setLogos }) => {
           <div className="mt-8">
             <h3 className="text-lg font-semibold mb-4">Generated Logos</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {logos.map((logo) => (
+              {logos.slice(-16).map((logo) => (  // Display only the last 16 logos
                 <Card key={logo.id} className="overflow-hidden border border-gray-200 rounded-lg">
                   <CardContent className="p-4">
                     <img
