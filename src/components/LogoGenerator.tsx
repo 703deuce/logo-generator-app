@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Loader2, HelpCircle, Download } from "lucide-react"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Logo } from "@/types/logo"
+import LogoDetail from "./LogoDetail";
 
 interface LogoGeneratorProps {
   logos: Logo[];
@@ -19,6 +20,7 @@ const LogoGenerator: React.FC<LogoGeneratorProps> = ({ logos, setLogos }) => {
   const [industry, setIndustry] = useState("")
   const [style, setStyle] = useState("")
   const [isLoading, setIsLoading] = useState(false)
+  const [selectedLogo, setSelectedLogo] = useState<Logo | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -55,6 +57,22 @@ const LogoGenerator: React.FC<LogoGeneratorProps> = ({ logos, setLogos }) => {
       setIsLoading(false);
     }
   }
+
+  const handleLogoClick = (logo: Logo) => {
+    setSelectedLogo(logo);
+  };
+
+  const handleBackClick = () => {
+    setSelectedLogo(null);
+  };
+
+  const handleLogoUpdate = (updatedLogo: Logo) => {
+    const updatedLogos = logos.map((logo) =>
+      logo.id === updatedLogo.id ? updatedLogo : logo
+    );
+    setLogos(updatedLogos);
+    setSelectedLogo(updatedLogo);
+  };
 
   return (
     <main className="flex-1 overflow-y-auto border-l border-r border-gray-200">
@@ -156,8 +174,8 @@ const LogoGenerator: React.FC<LogoGeneratorProps> = ({ logos, setLogos }) => {
           <div className="mt-8">
             <h3 className="text-lg font-semibold mb-4">Generated Logos</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {logos.slice(-16).map((logo) => (  // Display only the last 16 logos
-                <Card key={logo.id} className="overflow-hidden border border-gray-200 rounded-lg">
+              {logos.map((logo) => (
+                <Card key={logo.id} className="overflow-hidden border border-gray-200 rounded-lg cursor-pointer" onClick={() => handleLogoClick(logo)}>
                   <CardContent className="p-4">
                     <img
                       src={logo.url}
@@ -178,6 +196,14 @@ const LogoGenerator: React.FC<LogoGeneratorProps> = ({ logos, setLogos }) => {
           </div>
         )}
       </div>
+
+      {selectedLogo && (
+        <LogoDetail
+          logo={selectedLogo}
+          onBack={handleBackClick}
+          onUpdate={handleLogoUpdate}
+        />
+      )}
     </main>
   )
 }

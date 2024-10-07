@@ -2,7 +2,7 @@
 
 import React, { useState } from "react"
 import Sidebar from "./Sidebar"
-import LogoGenerator from "./LogoGenerator"
+import LogoGenerator from "@/components/LogoGenerator"
 import LogoHistory from "./LogoHistory"  // Comment out or remove this line if LogoHistory doesn't exist yet
 import { Logo } from "@/types/logo"
 
